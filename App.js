@@ -120,38 +120,14 @@ const App = () => {
                   </>
                 ) : (
                   <>
-                    <Stack.Screen
-                      name="Welcome"
-                      component={Welcome}
-                    />
-                    <Stack.Screen
-                      name="Login"
-                      component={Login}
-                    />
-                    <Stack.Screen
-                      name="Register"
-                      component={Register}
-                    />
-                    <Stack.Screen
-                      name="Address"
-                      component={Address}
-                    />
-                    <Stack.Screen
-                      name="Password"
-                      component={Password}
-                    />
-                    <Stack.Screen
-                      name="SendEmailRegister"
-                      component={SendEmailRegister}
-                    />
-                    <Stack.Screen
-                      name="ForgotPassword"
-                      component={ForgotPassword}
-                    />
-                    <Stack.Screen
-                      name="SendEmailForgotPassword"
-                      component={SendEmailForgotPassword}
-                    />
+                    <Stack.Screen name="Welcome" component={Welcome} />
+                    <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="Register" component={Register} />
+                    <Stack.Screen name="Address" component={Address} />
+                    <Stack.Screen  name="Password" component={Password} />
+                    <Stack.Screen name="SendEmailRegister" component={SendEmailRegister} />
+                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                    <Stack.Screen name="SendEmailForgotPassword" component={SendEmailForgotPassword} />
                   </>
                   
               )}
