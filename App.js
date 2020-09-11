@@ -85,9 +85,17 @@ function HomeTab () {
 const App = () => {
 
   const [isSigned, setisSigned ] = useState(false);
+  
+
 
   useEffect(() => {
-    setisSigned(Storage.get('token'));
+    async function getToken() {
+      const token = await Storage.get('token');
+      setisSigned(token);
+      console.log(token)
+    }
+
+    getToken();
   }, [])
   
 
@@ -143,10 +151,12 @@ const App = () => {
                     <Stack.Screen
                       name="SendEmailForgotPassword"
                       component={SendEmailForgotPassword}
-                    /> 
+                    />
                   </>
+                  
               )}
 
+            
           </Stack.Navigator>
         </NavigationContainer>
     </>

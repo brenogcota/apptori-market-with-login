@@ -60,7 +60,7 @@ function Product({ navigation }) {
 
                     <InputContainer>
                         <TouchableOpacity onPress={() => { decrement() }}>
-                            <Icon name="minus" size={20} color="#666"/>
+                            <Icon name="minus" size={20} color="#666" style={{padding: 5}}/>
                         </TouchableOpacity>
                         
                         <InputBox defaultValue={quantity.toString()} 
@@ -70,7 +70,7 @@ function Product({ navigation }) {
                         />
                         
                         <TouchableOpacity onPress={() => { increment() }}>
-                            <Icon name="plus" size={20} color="#666"/>
+                            <Icon name="plus" size={20} color="#666" style={{padding: 5}}/>
                         </TouchableOpacity>
                     </InputContainer>
 

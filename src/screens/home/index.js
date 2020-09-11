@@ -35,7 +35,10 @@ export default function Home({ navigation }) {
   return (
     <Wrapper>
       
-      <SearchInput placeholder="Pesquisar..." onChangeText={() => ({})} />
+      <SearchInput 
+        placeholder="Pesquisar..." 
+        onChangeText={() => ({})}
+      />
       
       <CategoriesFilter>
         <CategoryFilter active={true}>

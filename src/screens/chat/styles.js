@@ -58,6 +58,7 @@ export const MessageFrom = styled.View`
     position: relative;
     align-self: flex-start;
     border-radius: 16px;
+    border-bottom-left-radius: 0;
 `;
 
 export const MessageTo = styled.View`
@@ -68,6 +69,7 @@ export const MessageTo = styled.View`
     position: relative;
     align-self: flex-end;
     border-radius: 16px;
+    border-bottom-right-radius: 0;
 `;
 
 export const InputBox = styled.View`

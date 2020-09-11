@@ -62,11 +62,11 @@ function CreditCard({ navigation }) {
 
                     <CardFooter>
                         <EditIcon >
-                            <Image source={IconEdit} />
+                            <Image source={IconEdit} style={{padding: 10}}/>
                         </EditIcon>
 
                         <RemoveIcon >
-                            <Image source={IconEdit} />
+                            <Image source={IconRemove} style={{padding: 10}}/>
                         </RemoveIcon>
                         
                         

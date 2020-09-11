@@ -46,7 +46,7 @@ function Chat({ navigation }) {
             >
 
                 <MessageFrom>
-
+                    
                 </MessageFrom>
 
                 <MessageTo>
