@@ -76,6 +76,7 @@ export function Login(props: LoginProps) {
         .then((response) => {
           setLoading(false);
           Storage.setKey('token', response.data.token);
+          props.navigation.navigate('Tab');
           Alert.alert(
             'Sucesso',
             'logado',

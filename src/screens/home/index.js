@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, Image, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -28,6 +28,12 @@ import {
  
 export default function Home({ navigation }) {
 
+  const [active, setActive] = useState(false);
+
+  const handleActive = () => {
+    setActive(true);
+  }
+
   const goTo = () => {
     navigation.navigate('Product');
   }
@@ -41,7 +47,7 @@ export default function Home({ navigation }) {
       />
       
       <CategoriesFilter>
-        <CategoryFilter active={true}>
+        <CategoryFilter active={active} onPress={ handleActive}>
           <Text>Produtos Orientais</Text>
         </CategoryFilter>
 

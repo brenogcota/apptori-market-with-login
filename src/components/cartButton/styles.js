@@ -7,5 +7,5 @@ export const Button = styled.TouchableOpacity`
     background: rgb(226, 28, 28);
     align-items: center;
     justify-content: center;
-    bottom: 10px;
+    bottom: ${props => props.focused ?  '12px' : '10px'};
 `;

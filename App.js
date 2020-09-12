@@ -45,20 +45,20 @@ function HomeTab () {
           let icon;
 
           if (route.name === 'Home') {
-              icon = focused ? require('./src/assets/icons/home_icone_ativo_x1.png') : require('./src/assets/icons/home_icone_inativo_x1.png')
+              icon = focused ? require('./src/assets/icons/home_icone_ativo_x3.png') : require('./src/assets/icons/home_icone_inativo_x3.png')
               return(
-                 <Image source={icon} />
+                 <Image source={icon} style={{width: 26, height: 26}} />
               ); 
           } else if (route.name === ' ') {
             return (
-              <CartButton 
+              <CartButton focused={focused}
                 onPress={ () => navigation.navigate(' ')}
               />
             );
           } else if (route.name === 'Pedidos') {
-            icon = focused ? require('./src/assets/icons/pedidos_icone_ativo_x1.png') : require('./src/assets/icons/pedidos_icone_inativo_x1.png')
+            icon = focused ? require('./src/assets/icons/pedidos_icone_ativo_x3.png') : require('./src/assets/icons/pedidos_icone_inativo_x3.png')
               return(
-                 <Image source={icon} />
+                 <Image source={icon} style={{width: 26, height: 26}} />
               );
           }
 
@@ -106,32 +106,28 @@ const App = () => {
             headerShown: false
           }}
         >
+            {     
+            !isSigned && (
+            <>
+              <Stack.Screen name="Welcome" component={Welcome} />
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="Address" component={Address} />
+              <Stack.Screen  name="Password" component={Password} />
+              <Stack.Screen name="SendEmailRegister" component={SendEmailRegister} />
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+              <Stack.Screen name="SendEmailForgotPassword" component={SendEmailForgotPassword} />
+            </>
+            )}
 
-              {
-                isSigned ? (
-                  <>
-                    <Stack.Screen name="Tab" component={HomeTab} />
-                    <Stack.Screen name="Home" component={Home} />
-                    <Stack.Screen name="Product" component={Product} />
-                    <Stack.Screen name="Sale" component={Sale} />
-                    <Stack.Screen name="CreditCard" component={CreditCard} />
-                    <Stack.Screen name="SuccessRequest" component={SuccessRequest} />
-                    <Stack.Screen name="Chat" component={Chat} />
-                  </>
-                ) : (
-                  <>
-                    <Stack.Screen name="Welcome" component={Welcome} />
-                    <Stack.Screen name="Login" component={Login} />
-                    <Stack.Screen name="Register" component={Register} />
-                    <Stack.Screen name="Address" component={Address} />
-                    <Stack.Screen  name="Password" component={Password} />
-                    <Stack.Screen name="SendEmailRegister" component={SendEmailRegister} />
-                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-                    <Stack.Screen name="SendEmailForgotPassword" component={SendEmailForgotPassword} />
-                  </>
-                  
-              )}
 
+            <Stack.Screen name="Tab" component={HomeTab} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Product" component={Product} />
+            <Stack.Screen name="Sale" component={Sale} />
+            <Stack.Screen name="CreditCard" component={CreditCard} />
+            <Stack.Screen name="SuccessRequest" component={SuccessRequest} />
+            <Stack.Screen name="Chat" component={Chat} />
             
           </Stack.Navigator>
         </NavigationContainer>

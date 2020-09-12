@@ -1,13 +1,13 @@
 import React from 'react';
 import { Image } from 'react-native';
-import Icon from '../../assets/icons/carrinho_icone_branco_x1.png'
+import Icon from '../../assets/icons/carrinho_icone_branco_x3.png'
 
 import { Button } from './styles';
 
-function CartButton({ onPress }) {
+function CartButton({ onPress, focused }) {
   return (
-    <Button onPress={onPress}>
-        <Image source={Icon} />
+    <Button focused={focused} onPress={onPress}>
+        <Image source={Icon} style={{width: 30, height: 30}} />
     </Button>
   );
 }
