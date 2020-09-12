@@ -102,7 +102,7 @@ const App = () => {
   return (
     <>
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{
+          <Stack.Navigator initialRouteName={ isSigned ? 'Tab' : 'Welcome' } screenOptions={{
             headerShown: false
           }}
         >
