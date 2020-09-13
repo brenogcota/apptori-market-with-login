@@ -1,13 +1,13 @@
 import 'react-native-gesture-handler';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import { AuthContext } from './src/context/authContext';
 import Storage from './src/services/storage';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-
 
 
 /* Login  */
@@ -91,22 +91,25 @@ const App = () => {
 
   const [Signed, setSigned ] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  
-
 
   useEffect(() => {
-    async function getToken() {
+    (async () => {
       const token = await Storage.get('token');
-      setSigned(token);
+      setSigned(!!token);
       setLoading(false);
-    }
+    })();
 
-    getToken();
   }, [])
+
+  const authContext = useMemo(() => ({
+    signIn: async () => {
+        setSigned(true);
+    }
+  }));
   
 
   return (
-    <>
+    <AuthContext.Provider value={authContext}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{
             headerShown: false
@@ -119,8 +122,19 @@ const App = () => {
             }
 
             {     
-            !Signed && (
+            Signed ? (
             <>
+              <Stack.Screen name="Tab" component={HomeTab} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Product" component={Product} />
+              <Stack.Screen name="Sale" component={Sale} />
+              <Stack.Screen name="CreditCard" component={CreditCard} />
+              <Stack.Screen name="SuccessRequest" component={SuccessRequest} />
+              <Stack.Screen name="Chat" component={Chat} />
+            </>
+            
+            ) : (
+            <>   
               <Stack.Screen name="Welcome" component={Welcome} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Register" component={Register} />
@@ -131,20 +145,10 @@ const App = () => {
               <Stack.Screen name="SendEmailForgotPassword" component={SendEmailForgotPassword} />
             </>
             )}
-
-                
-            <Stack.Screen name="Tab" component={HomeTab} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Product" component={Product} />
-            <Stack.Screen name="Sale" component={Sale} />
-            <Stack.Screen name="CreditCard" component={CreditCard} />
-            <Stack.Screen name="SuccessRequest" component={SuccessRequest} />
-            <Stack.Screen name="Chat" component={Chat} />
-                
             
           </Stack.Navigator>
         </NavigationContainer>
-    </>
+    </AuthContext.Provider>
   );
 };
 

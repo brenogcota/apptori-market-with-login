@@ -16,6 +16,8 @@ const windowHeight = Dimensions.get('window').height;
 import Api from '../../services/api';
 import Storage from '../../services/storage';
 
+import { AuthContext } from '../../context/authContext';
+
 export interface LoginProps extends StackScreenProps<any, any> {}
 let loginForm: any = {
   email: {value: '', error: ''},
@@ -24,6 +26,8 @@ let loginForm: any = {
 export function Login(props: LoginProps) {
   const [login, setLogin] = React.useState(loginForm);
   const [loading, setLoading] = React.useState(false);
+
+  const { signIn } = React.useContext(AuthContext);
 
   const handle = (value: any, name: string) => {
     setLogin((prevState: any) => {
@@ -77,7 +81,7 @@ export function Login(props: LoginProps) {
         .then((response) => {
           setLoading(false);
           Storage.setKey('token', response.data.token);
-          props.navigation.navigate('Tab');
+          signIn();
           Alert.alert(
             'Sucesso',
             'logado',
