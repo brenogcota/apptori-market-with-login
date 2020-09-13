@@ -89,7 +89,7 @@ function HomeTab () {
 
 const App = () => {
 
-  const [isSigned, setisSigned ] = useState(false);
+  const [Signed, setSigned ] = useState(false);
   const [isLoading, setLoading] = useState(true);
   
 
@@ -97,7 +97,7 @@ const App = () => {
   useEffect(() => {
     async function getToken() {
       const token = await Storage.get('token');
-      setisSigned(token);
+      setSigned(token);
       setLoading(false);
     }
 
@@ -112,8 +112,14 @@ const App = () => {
             headerShown: false
           }}
         >
+            { 
+              isLoading && (
+                <Stack.Screen name="Loading" component={Loading} />
+              )
+            }
+
             {     
-            !isSigned && (
+            !Signed && (
             <>
               <Stack.Screen name="Welcome" component={Welcome} />
               <Stack.Screen name="Login" component={Login} />
@@ -126,21 +132,15 @@ const App = () => {
             </>
             )}
 
-            {
-              isLoading ? (
-                <Stack.Screen name="Loading" component={Loading} />
-              ) : (
-                <>
-                  <Stack.Screen name="Tab" component={HomeTab} />
-                  <Stack.Screen name="Home" component={Home} />
-                  <Stack.Screen name="Product" component={Product} />
-                  <Stack.Screen name="Sale" component={Sale} />
-                  <Stack.Screen name="CreditCard" component={CreditCard} />
-                  <Stack.Screen name="SuccessRequest" component={SuccessRequest} />
-                  <Stack.Screen name="Chat" component={Chat} />
-                </>
-              )
-            }
+                
+            <Stack.Screen name="Tab" component={HomeTab} />
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Product" component={Product} />
+            <Stack.Screen name="Sale" component={Sale} />
+            <Stack.Screen name="CreditCard" component={CreditCard} />
+            <Stack.Screen name="SuccessRequest" component={SuccessRequest} />
+            <Stack.Screen name="Chat" component={Chat} />
+                
             
           </Stack.Navigator>
         </NavigationContainer>

@@ -1,10 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Image, View } from 'react-native';
+
+import Splash from '../../assets/images/splash.png'
 
 export default Loading = () => {
     return (
-        <View style={{ flex: 1, backgroundColor: '#666', alignItems: 'center', justifyContent: 'center'}}> 
-            <Text style={{color: '#fff', fontSize: 28}}>Loading...</Text>
-        </View> 
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Image source={Splash} style={{resizeMode: 'center', width: '50%'}}/>
+        </View>   
     );
 }
