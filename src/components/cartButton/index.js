@@ -7,7 +7,7 @@ import { Button } from './styles';
 function CartButton({ onPress, focused }) {
   return (
     <Button focused={focused} onPress={onPress}>
-        <Image source={Icon} style={{width: 30, height: 30}} />
+        <Image source={Icon} style={{width: 24, height: 24}} />
     </Button>
   );
 }

@@ -4,7 +4,7 @@
     "slug": "toriMarket",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon_round.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

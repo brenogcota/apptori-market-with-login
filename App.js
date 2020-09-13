@@ -32,6 +32,7 @@ import CreditCard from './src/screens/creditCard';
 import SuccessRequest from './src/screens/successRequest';
 import Chat from './src/screens/chat';
 import CartButton from './src/components/cartButton';
+import Loading from './src/screens/loading';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,7 +48,7 @@ function HomeTab () {
           if (route.name === 'Home') {
               icon = focused ? require('./src/assets/icons/home_icone_ativo_x3.png') : require('./src/assets/icons/home_icone_inativo_x3.png')
               return(
-                 <Image source={icon} style={{width: 26, height: 26}} />
+                 <Image source={icon} style={{width: 24, height: 24}} />
               ); 
           } else if (route.name === ' ') {
             return (
@@ -58,7 +59,7 @@ function HomeTab () {
           } else if (route.name === 'Pedidos') {
             icon = focused ? require('./src/assets/icons/pedidos_icone_ativo_x3.png') : require('./src/assets/icons/pedidos_icone_inativo_x3.png')
               return(
-                 <Image source={icon} style={{width: 26, height: 26}} />
+                 <Image source={icon} style={{width: 24, height: 24}} />
               );
           }
 
@@ -69,6 +70,10 @@ function HomeTab () {
       tabBarOptions={{
         activeTintColor: 'black',
         inactiveTintColor: 'gray',
+        style: {
+          height: 57,
+          elevation: 40
+        }
       }}
     >
 
@@ -85,6 +90,7 @@ function HomeTab () {
 const App = () => {
 
   const [isSigned, setisSigned ] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   
 
 
@@ -92,7 +98,7 @@ const App = () => {
     async function getToken() {
       const token = await Storage.get('token');
       setisSigned(token);
-      console.log(token)
+      setLoading(false);
     }
 
     getToken();
@@ -102,7 +108,7 @@ const App = () => {
   return (
     <>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName={ isSigned ? 'Tab' : 'Welcome' } screenOptions={{
+          <Stack.Navigator screenOptions={{
             headerShown: false
           }}
         >
@@ -120,14 +126,21 @@ const App = () => {
             </>
             )}
 
-
-            <Stack.Screen name="Tab" component={HomeTab} />
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Product" component={Product} />
-            <Stack.Screen name="Sale" component={Sale} />
-            <Stack.Screen name="CreditCard" component={CreditCard} />
-            <Stack.Screen name="SuccessRequest" component={SuccessRequest} />
-            <Stack.Screen name="Chat" component={Chat} />
+            {
+              isLoading ? (
+                <Stack.Screen name="Loading" component={Loading} />
+              ) : (
+                <>
+                  <Stack.Screen name="Tab" component={HomeTab} />
+                  <Stack.Screen name="Home" component={Home} />
+                  <Stack.Screen name="Product" component={Product} />
+                  <Stack.Screen name="Sale" component={Sale} />
+                  <Stack.Screen name="CreditCard" component={CreditCard} />
+                  <Stack.Screen name="SuccessRequest" component={SuccessRequest} />
+                  <Stack.Screen name="Chat" component={Chat} />
+                </>
+              )
+            }
             
           </Stack.Navigator>
         </NavigationContainer>

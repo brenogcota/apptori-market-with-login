@@ -22,15 +22,10 @@ function Chat({ navigation }) {
 
     const scrollViewRef = useRef();
 
-    const goBack = () => {
-        navigation.navigate('Pedidos')
-    }
   return (
       <Wrapper>
           <ProductHeader>
-                <BackgroundArrow onPress={() => {
-                    goBack()
-                }}>
+                <BackgroundArrow onPress={() => { navigation.goBack() }}>
                     <MIcon name="chevron-left" size={40} color="#fff" />
                 </BackgroundArrow>
 

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Wrapper = styled.View`
     flex: 1;
     padding: 10px;
+    padding-top: 40px;
     padding-bottom: 0;
-    margin-top: 20px;
     background: #f6f6f6;
 `;
 
@@ -13,13 +13,26 @@ export const Container = styled.ScrollView.attrs({
     showsVerticalScrollIndicator: false
 })``;
 
+export const SearchBox = styled.View`
+    flex-direction: row;
+    flex: 1;
+    min-height: 40px;
+    border-radius: 12px;
+    background: #f1f1f1;
+    align-items: center;
+`;
+
 export const SearchInput = styled.TextInput`
-    height: 42px;
-    width: 100%;
-    background: #e1e1e1;
-    margin: 25px 0;
-    padding: 10px;
-    border-radius: 16px;
+    font-size: 18px;
+    padding-right: 46px;
+    padding-left: 20px;
+`;
+
+export const UserImage = styled.Image`
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: 10px;
 `;
 
 export const CategoriesFilter = styled.ScrollView.attrs({
@@ -27,20 +40,20 @@ export const CategoriesFilter = styled.ScrollView.attrs({
     showsHorizontalScrollIndicator: false
 })`
     margin: 20px 0;
-    min-height: 62px;
+    min-height: 32px;
 `;
 
 export const CategoryFilter = styled.TouchableOpacity`
-    padding: 18px;
+    padding: 8px 12px;
     margin: 0 6px;
     justify-content: center;
-    border: 2px solid ${props => props.active ? "rgb(226, 28, 28)" : "#ddd"};
-    border-radius: 16px;
+    border: 1.6px solid ${props => props.border};
+    border-radius: 12px;
 `;
 
 export const TextBig = styled.Text`
-    font-size: 22px;
-    color: #666;
+    font-size: 18px;
+    color: #c4c4c4;
 `;
 
 export const Promotions = styled.ScrollView.attrs({
@@ -48,7 +61,7 @@ export const Promotions = styled.ScrollView.attrs({
     showsHorizontalScrollIndicator: false
 })`
     margin: 20px 0;
-    height: 160px;
+    height: 130px;
 `;
 
 export const PromotionImage = styled.Image`
@@ -60,7 +73,7 @@ export const PromotionImage = styled.Image`
 `;
 
 export const Promotion = styled.View`
-    width: 280px;
+    width: 260px;
     background: #ccc;
     margin-right: 10px;
     border-radius: 16px;
@@ -68,11 +81,11 @@ export const Promotion = styled.View`
 
 export const Label = styled.Text`
     color: #fff;
-    font-size: 36px;
+    font-size: 28px;
     font-weight: bold;
     position: absolute;
     z-index: 2;
-    bottom: 5px;
+    bottom: 10px;
     right: 110px;
 `;
 export const LabelPercent = styled.Text`
@@ -90,11 +103,11 @@ export const Products = styled.ScrollView.attrs({
     showsHorizontalScrollIndicator: false
 })`
     margin: 20px 0;
-    height: 140px;
+    height: 130px;
 `;
 
 export const Product = styled.View`
-    width: 180px;
+    width: 140px;
     background: #ccc;
     margin-right: 12px;
     border-radius: 16px;
@@ -109,7 +122,7 @@ export const ProductImage = styled.Image`
 
 export const ProductName = styled.View`
     height: 42px;
-    background: #fff;
+    background: ${props => props.background};
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -124,7 +137,7 @@ export const ProductPrice = styled.View`
     border-radius: 25px;
     background: #333;
     position: absolute;
-    top: 25%;
+    top: 32px;
     align-self: flex-end;
     right: 10px;
     align-items: center;

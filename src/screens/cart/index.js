@@ -38,11 +38,7 @@ function Cart({ navigation }) {
   }
 
   const decrement = () => {
-      quantity < 1 ? setQuantity(0) : setQuantity(parseInt(quantity) - 1)
-  }
-
-  const goBack = () => {
-    navigation.navigate('Home');
+      quantity < 2 ? setQuantity(1) : setQuantity(parseInt(quantity) - 1)
   }
 
   const goTo = (route) => {
@@ -52,9 +48,7 @@ function Cart({ navigation }) {
   return (
     <Wrapper>
       <Header>
-        <BackgroundArrow onPress={() => {
-            goBack()
-        }}>
+        <BackgroundArrow onPress={() => { navigation.goBack() }}>
            <MIcon name="chevron-left" size={40} color="#fff" />
         </BackgroundArrow>
 
@@ -81,7 +75,7 @@ function Cart({ navigation }) {
                         
                   <InputBox defaultValue={quantity.toString()} 
                             placeholderTextColor="#000" 
-                            onChangeText={() => ({})} 
+                            onChangeText={setQuantity} 
                             keyboardType={'numeric'}
                   />
                         

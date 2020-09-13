@@ -24,6 +24,7 @@ let loginForm: any = {
 export function Login(props: LoginProps) {
   const [login, setLogin] = React.useState(loginForm);
   const [loading, setLoading] = React.useState(false);
+
   const handle = (value: any, name: string) => {
     setLogin((prevState: any) => {
       prevState[name].value = value;

@@ -34,21 +34,17 @@ function Product({ navigation }) {
     }
 
     const decrement = () => {
-        quantity < 1 ? setQuantity(0) : setQuantity(parseInt(quantity) - 1)
+        quantity < 2 ? setQuantity(1) : setQuantity(parseInt(quantity) - 1)
     }
 
-    const goBack = () => {
-        navigation.navigate('Tab');
-    }
+
     return (
         <Wrapper>
             <ProductHeader>
                 <ProductImage
                     source={Image2}
                 />
-                <BackgroundArrow onPress={() => {
-                    goBack()
-                }}>
+                <BackgroundArrow onPress={() => { navigation.goBack() }}>
                     <MIcon name="chevron-left" size={40} />
                 </BackgroundArrow>
 
@@ -65,7 +61,7 @@ function Product({ navigation }) {
                         
                         <InputBox defaultValue={quantity.toString()} 
                                   placeholderTextColor="#000" 
-                                  onChangeText={() => ({})} 
+                                  onChangeText={setQuantity} 
                                   keyboardType={'numeric'}
                         />
                         

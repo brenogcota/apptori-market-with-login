@@ -13,10 +13,6 @@ import {    Wrapper,
 
 function SuccessRequest({ navigation }) {
 
-    const goBack = () => {
-        navigation.navigate('Pedidos');
-    }
-    
   return (
       <Wrapper>
           <Container>
@@ -29,7 +25,7 @@ function SuccessRequest({ navigation }) {
                   <Number>#001</Number>
               </Details>
 
-              <Button onPress={() => goBack()}>
+              <Button onPress={() => { navigation.navigate('Pedidos'); }}>
                 <TextButton>Ver Pedidos</TextButton>
               </Button>
           </Container>

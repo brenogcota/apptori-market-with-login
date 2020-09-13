@@ -18,10 +18,6 @@ import { Wrapper,
 
 function Sale({ navigation }) {
 
-    const goBack = () => {
-        navigation.navigate('Pedidos');
-    }
-
     const goTo = (route) => {
         navigation.navigate(route);
     }
@@ -32,9 +28,7 @@ function Sale({ navigation }) {
                 <ProductImage
                     source={Image3}
                 />
-                <BackgroundArrow onPress={() => {
-                    goBack()
-                }}>
+                <BackgroundArrow onPress={() => { navigation.goBack() }}>
                     <MIcon name="chevron-left" size={40} />
                 </BackgroundArrow>
 

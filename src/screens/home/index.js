@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Text, Image, TouchableWithoutFeedback } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Image1 from '../../assets/images/1.jpg';
 import Image2 from '../../assets/images/2.webp';
 import Image3 from '../../assets/images/3.webp';
+import UserIcon from '../../assets/icons/perfil_icone_x3.png';
 
 import { 
         Wrapper, 
+        SearchBox,
         SearchInput,
+        UserImage,
         CategoriesFilter,
         CategoryFilter,
         TextBig,
@@ -28,12 +30,6 @@ import {
  
 export default function Home({ navigation }) {
 
-  const [active, setActive] = useState(false);
-
-  const handleActive = () => {
-    setActive(true);
-  }
-
   const goTo = () => {
     navigation.navigate('Product');
   }
@@ -41,22 +37,21 @@ export default function Home({ navigation }) {
   return (
     <Wrapper>
       
-      <SearchInput 
-        placeholder="Pesquisar..." 
-        onChangeText={() => ({})}
-      />
+      <SearchBox>
+        <SearchInput 
+          placeholder="Pesquisar..." 
+          onChangeText={() => ({})}
+        />
+        <UserImage source={UserIcon} />
+      </SearchBox>
       
       <CategoriesFilter>
-        <CategoryFilter active={active} onPress={ handleActive}>
-          <Text>Produtos Orientais</Text>
+        <CategoryFilter border="red">
+          <Text style={{ color: 'rgb(226, 28, 28)', fontSize: 16}}>Produtos orientais</Text>
         </CategoryFilter>
 
-        <CategoryFilter>
-          <Text>Produtos Orientais</Text>
-        </CategoryFilter>
-
-        <CategoryFilter>
-          <Text>Produtos Orientais</Text>
+        <CategoryFilter border="green">
+          <Text style={{ color: 'green', fontSize: 16}}>Produtos naturais</Text>
         </CategoryFilter>
 
       </CategoriesFilter>
@@ -103,8 +98,8 @@ export default function Home({ navigation }) {
                 <ProductPrice>
                   <LightSmallText>R$ 00,0</LightSmallText>
                 </ProductPrice>
-                <ProductName>
-                  <Text numberOfLines={1}> Nome produto</Text>
+                <ProductName background="#FA4F54">
+                  <Text numberOfLines={1} style={{ color: '#fff'}}> Nome produto</Text>
                 </ProductName>
               </Product>
             </TouchableWithoutFeedback>
@@ -119,41 +114,30 @@ export default function Home({ navigation }) {
                 <ProductPrice>
                   <LightSmallText>R$ 00,0</LightSmallText>
                 </ProductPrice>
-                <ProductName>
-                  <Text numberOfLines={1}> Nome produto</Text>
+                <ProductName background="#F8935A">
+                  <Text numberOfLines={1} style={{ color: '#fff'}}> Nome produto</Text>
                 </ProductName>
               </Product>
-            </TouchableWithoutFeedback>            
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback onPress={()=> {
+              goTo()
+            }}>
+              <Product>
+                <ProductImage
+                  source={Image3}
+                />
+                <ProductPrice>
+                  <LightSmallText>R$ 00,0</LightSmallText>
+                </ProductPrice>
+                <ProductName background="#FADE5F">
+                  <Text numberOfLines={1} style={{ color: '#fff'}}> Nome produto</Text>
+                </ProductName>
+              </Product>
+            </TouchableWithoutFeedback>          
 
           </Products>
 
-
-          <Products>
-            <Product>
-              <ProductImage
-                source={Image3}
-              />
-              <ProductPrice>
-                <LightSmallText>R$ 00,0</LightSmallText>
-              </ProductPrice>
-              <ProductName>
-                <Text numberOfLines={1}> Nome produto</Text>
-              </ProductName>
-            </Product>
-
-            <Product>
-              <ProductImage
-                source={Image1}
-              />
-              <ProductPrice>
-                <LightSmallText>R$ 00,0</LightSmallText>
-              </ProductPrice>
-              <ProductName>
-                <Text numberOfLines={1}> Nome produto</Text>
-              </ProductName>
-            </Product>
-
-          </Products>
 
       </Container>
 

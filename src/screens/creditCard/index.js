@@ -3,8 +3,8 @@ import { Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
-import IconEdit from '../../assets/icons/editar_icone_x1.png';
-import IconRemove from '../../assets/icons/excluir_icone_x1.png';
+import IconEdit from '../../assets/icons/editar_icone_x3.png';
+import IconRemove from '../../assets/icons/excluir_icone_x3.png';
 
 import {    Wrapper, 
             Container,
@@ -25,18 +25,12 @@ import {    Wrapper,
 
 function CreditCard({ navigation }) {
 
-    const goBack = () => {
-        navigation.navigate(' ');
-    }
-
   return (
         <Wrapper>
             
                 <Header>
                     <Back>
-                        <BackgroundArrow onPress={() => {
-                            goBack()
-                        }}>
+                        <BackgroundArrow onPress={() => { navigation.goBack() }}>
                             <MIcon name="chevron-left" size={40} color="#fff" />
                         </BackgroundArrow>
 
@@ -62,11 +56,11 @@ function CreditCard({ navigation }) {
 
                     <CardFooter>
                         <EditIcon >
-                            <Image source={IconEdit} style={{padding: 10}}/>
+                            <Image source={IconEdit} style={{padding: 10, width: 20, height: 20}}/>
                         </EditIcon>
 
                         <RemoveIcon >
-                            <Image source={IconRemove} style={{padding: 10}}/>
+                            <Image source={IconRemove} style={{padding: 10, width: 20, height: 20}}/>
                         </RemoveIcon>
                         
                         
