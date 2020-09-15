@@ -290,7 +290,6 @@ export function Address(props: AddressProps) {
         </View>
       ) : (
         <View style={style.containerForm}>
-          <Text> VERSAO (v1.0.5)</Text>
           <AddressForm data={address} handle={handle}></AddressForm>
         </View>
       )}

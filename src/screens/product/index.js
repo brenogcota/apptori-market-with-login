@@ -30,7 +30,7 @@ function Product({ navigation }) {
     const [quantity, setQuantity] = useState(1);
 
     const increment = () => {
-        setQuantity(parseInt(quantity) + 1);
+        quantity < 2 ? setQuantity(1) : setQuantity(parseInt(quantity) + 1);
     }
 
     const decrement = () => {

@@ -129,7 +129,7 @@ export function InfoPersonal(props: InfoPersonal) {
         </Text>
       </View>
       <View style={style.containerTitle}>
-        <Text style={style.title}>Obrigado por nos escolher (v1.0.5)</Text>
+        <Text style={style.title}>Obrigado por nos escolher</Text>
       </View>
       <View style={style.containerForm}>
         <InfoPersonalForm handle={handle} data={personal}></InfoPersonalForm>

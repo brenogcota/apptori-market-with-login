@@ -82,12 +82,6 @@ export function Login(props: LoginProps) {
           setLoading(false);
           Storage.setKey('token', response.data.token);
           signIn();
-          Alert.alert(
-            'Sucesso',
-            'logado',
-            [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-            {cancelable: false},
-          );
         })
         .catch((error) => {
           console.log(error.response);

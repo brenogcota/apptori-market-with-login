@@ -17,6 +17,7 @@ export const SearchBox = styled.View`
     flex-direction: row;
     flex: 1;
     min-height: 40px;
+    max-height: 40px;
     border-radius: 12px;
     background: #f1f1f1;
     align-items: center;
@@ -41,6 +42,7 @@ export const CategoriesFilter = styled.ScrollView.attrs({
 })`
     margin: 20px 0;
     min-height: 32px;
+    max-height: 32px;
 `;
 
 export const CategoryFilter = styled.TouchableOpacity`

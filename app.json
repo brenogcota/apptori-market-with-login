@@ -25,6 +25,7 @@
     "android": {
       "package": "com.torimarket.torimarket",
       "versionCode": 1
-    }
+    },
+    "description": "App torimarket devlopment version"
   }
 }
