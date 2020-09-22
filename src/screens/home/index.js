@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, Image, TouchableWithoutFeedback } from 'react-native';
+
+import API from '../../services/api';
 
 import Image1 from '../../assets/images/1.jpg';
 import Image2 from '../../assets/images/2.webp';
@@ -30,9 +32,25 @@ import {
  
 export default function Home({ navigation }) {
 
-  const goTo = () => {
-    navigation.navigate('Product');
-  }
+  const [products, setProducts] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+     // const token = await Storage.get('token');
+  
+      //console.log(token);
+      API.getProducts('products')
+        .then((response) => {
+          setProducts(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    })();
+
+  }, [])
+
+  
 
   return (
     <Wrapper>
@@ -88,53 +106,36 @@ export default function Home({ navigation }) {
 
           <Products>
 
-            <TouchableWithoutFeedback onPress={()=> {
-              goTo()
-            }}>
-              <Product>
-                <ProductImage
-                  source={Image1}
-                />
-                <ProductPrice>
-                  <LightSmallText>R$ 00,0</LightSmallText>
-                </ProductPrice>
-                <ProductName background="#FA4F54">
-                  <Text numberOfLines={1} style={{ color: '#fff'}}> Nome produto</Text>
-                </ProductName>
-              </Product>
-            </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback onPress={()=> {
-              goTo()
-            }}>
-              <Product>
-                <ProductImage
-                  source={Image2}
-                />
-                <ProductPrice>
-                  <LightSmallText>R$ 00,0</LightSmallText>
-                </ProductPrice>
-                <ProductName background="#F8935A">
-                  <Text numberOfLines={1} style={{ color: '#fff'}}> Nome produto</Text>
-                </ProductName>
-              </Product>
-            </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback onPress={()=> {
-              goTo()
-            }}>
-              <Product>
-                <ProductImage
-                  source={Image3}
-                />
-                <ProductPrice>
-                  <LightSmallText>R$ 00,0</LightSmallText>
-                </ProductPrice>
-                <ProductName background="#FADE5F">
-                  <Text numberOfLines={1} style={{ color: '#fff'}}> Nome produto</Text>
-                </ProductName>
-              </Product>
-            </TouchableWithoutFeedback>          
+            { products ? products.map( product => {
+                return (
+                  <TouchableWithoutFeedback key={product.id} onPress={()=> {
+                    navigation.navigate('Product', {
+                      product: product,
+                    });
+                  }}>
+                    <Product>
+                      <ProductImage
+                        source={{uri:'https://torimarket.com.br/'+product.image}}
+                      />
+                      <ProductPrice>
+                        <LightSmallText numberOfLines={1}>R$ {product.price}</LightSmallText>
+                      </ProductPrice>
+                      <ProductName background="#FA4F54">
+                        <Text numberOfLines={1} style={{ color: '#fff'}}> {product.name}</Text>
+                      </ProductName>
+                    </Product>
+                  </TouchableWithoutFeedback>
+                )
+            }) : (
+              <>
+               <Product></Product>
+               <Product></Product>
+               <Product></Product>
+              </>
+            )
+          
+          }
+        
 
           </Products>
 

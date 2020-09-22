@@ -21,4 +21,11 @@ export default class API {
   static getLisAddress(data: any, path: string, token?: string) {
     return axios.post(url + path, data, {headers: {Authorization: token}});
   }
+  static getProducts(path: string) {
+    return axios.get(url + path);
+  }
+  static getProduct(path: string) {
+    console.log(url+path)
+    return axios.get(url + path);
+  }
 }

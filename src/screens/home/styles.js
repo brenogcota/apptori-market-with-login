@@ -110,7 +110,8 @@ export const Products = styled.ScrollView.attrs({
 
 export const Product = styled.View`
     width: 140px;
-    background: #ccc;
+    min-height: 100px;
+    background: #ddd;
     margin-right: 12px;
     border-radius: 16px;
 `;
@@ -150,4 +151,5 @@ export const ProductPrice = styled.View`
 
 export const LightSmallText = styled.Text`
     color: #fff;
+    font-size: 10px;
 `;

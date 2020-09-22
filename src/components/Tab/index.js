@@ -48,6 +48,13 @@ function HomeTab () {
           style: {
             height: 57,				
             elevation: 30,
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 12
+            },
+            shadowOpacity: 0.5,
+            shadowRadius: 16.00
           }
         }}
       >

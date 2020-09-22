@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { TouchableOpacity, Image } from 'react-native';
+
+import * as CartActions from '../../store/modules/cart/actions';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-
-import Image3 from '../../assets/images/3.webp';
 import IconCard from '../../assets/icons/cartao_icone_x3.png';
 
 import {  Wrapper, 
@@ -28,17 +30,26 @@ import {  Wrapper,
           Buy,
           BuyText
 } from './styles';
+export default function Cart({ navigation }) {
 
-function Cart({ navigation }) {
+  const total = useSelector(state => state.cart.reduce((totalSum, product) => {
+    return Number(totalSum + product.price * product.amount).toFixed(2);
+  }, 0));
 
-  const [quantity, setQuantity] = useState(1);
+  const cart = useSelector(state => state.cart.map(product => ({
+    ...product,
+    subtotal: Number(product.price * product.amount).toFixed(2),
+  })));
 
-  const increment = () => {
-      quantity < 2 ? setQuantity(1) : setQuantity(parseInt(quantity) + 1);
+
+  const dispatch = useDispatch();
+
+  const increment = (product) => {
+    dispatch(CartActions.updateAmount(product.id, product.amount + 1));
   }
 
-  const decrement = () => {
-      quantity < 2 ? setQuantity(1) : setQuantity(parseInt(quantity) - 1)
+  const decrement = (product) => {
+    dispatch(CartActions.updateAmount(product.id, product.amount - 1));
   }
 
   const goTo = (route) => {
@@ -57,38 +68,41 @@ function Cart({ navigation }) {
 
       <Container>
 
-        <Product>
-          <ProductImageBox>
-              <ProductImage source={Image3} />
-              <RemoveIcon onPress={() => {}}>
-                  <MIcon name="close" size={30} color="#fff"/>
-              </RemoveIcon>
-          </ProductImageBox>
-          
-          <ProductDetails>
-            <ProductName>Nome do produto</ProductName>
-            <ProductPrice>R$ 0,00</ProductPrice>
-            <InputContainer>
-                  <TouchableOpacity onPress={() => { decrement() }}>
-                      <Icon name="minus" size={20} color="#666"/>
-                  </TouchableOpacity>
-                        
-                  <InputBox defaultValue={quantity.toString()} 
-                            placeholderTextColor="#000" 
-                            onChangeText={setQuantity} 
-                            keyboardType={'numeric'}
-                  />
-                        
-                  <TouchableOpacity onPress={() => { increment() }}>
-                      <Icon name="plus" size={20} color="#666"/>
-                  </TouchableOpacity>
-            </InputContainer>
-          </ProductDetails>
-        </Product>
+        { cart.map( product => { 
+            return(
+              <Product key={product.id}>
+                <ProductImageBox>
+                    <ProductImage source={{uri: 'https://torimarket.com.br/'+product.image}} />
+                    <RemoveIcon onPress={() => dispatch(CartActions.removeFromCart(product.id))}>
+                        <MIcon name="close" size={30} color="#fff"/>
+                    </RemoveIcon>
+                </ProductImageBox>
+                
+                <ProductDetails>
+                  <ProductName>{product.name}</ProductName>
+                  <ProductPrice>R$ {product.subtotal}</ProductPrice>
+                  <InputContainer>
+                        <TouchableOpacity onPress={() => { decrement(product) }}>
+                            <Icon name="minus" size={20} color="#666"/>
+                        </TouchableOpacity>
+                              
+                        <InputBox defaultValue={product.amount.toString()} 
+                                  placeholderTextColor="#000"
+                                  keyboardType={'numeric'}
+                        />
+                              
+                        <TouchableOpacity onPress={() => { increment(product) }}>
+                            <Icon name="plus" size={20} color="#666"/>
+                        </TouchableOpacity>
+                  </InputContainer>
+                </ProductDetails>
+              </Product>
+            )
+        })}
         
         <AmountBox>
           <Quantity>Quantidade de items: 1</Quantity>
-          <Amount>Total: 0</Amount>
+          <Amount>Total: R$ {total}</Amount>
         </AmountBox>
 
         <ContainerBottom>
@@ -107,5 +121,3 @@ function Cart({ navigation }) {
     
   );
 }
-
-export default Cart;
