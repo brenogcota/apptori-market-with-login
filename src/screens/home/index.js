@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, Image, TouchableWithoutFeedback } from 'react-native';
 
+import Storage from '../../services/storage';
 import API from '../../services/api';
 
 import Image1 from '../../assets/images/1.jpg';
@@ -33,15 +34,24 @@ import {
 export default function Home({ navigation }) {
 
   const [products, setProducts] = useState(null);
+  const [categories, setCategories] = useState(null);
 
   useEffect(() => {
     (async () => {
-     // const token = await Storage.get('token');
+      const token = await Storage.get('token');
   
-      //console.log(token);
-      API.getProducts('products')
+      API.getProducts('products', token)
         .then((response) => {
           setProducts(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+
+      API.getCategories('products', token)
+        .then((response) => {
+          setCategories(response.data.data);
+          console.debug('category__'+categories);
         })
         .catch((error) => {
           console.log(error.response);
@@ -64,13 +74,17 @@ export default function Home({ navigation }) {
       </SearchBox>
       
       <CategoriesFilter>
-        <CategoryFilter border="red">
-          <Text style={{ color: 'rgb(226, 28, 28)', fontSize: 16}}>Produtos orientais</Text>
-        </CategoryFilter>
-
-        <CategoryFilter border="green">
-          <Text style={{ color: 'green', fontSize: 16}}>Produtos naturais</Text>
-        </CategoryFilter>
+        { categories ? categories.map(category => {
+          return (
+            <CategoryFilter key={category.id} border="green">
+              <Text style={{ color: 'green', fontSize: 16}}>{category.category_name}</Text>
+            </CategoryFilter>
+          ) 
+        }) : (
+          <CategoryFilter border="gray">
+            <Text style={{ color: 'gray', fontSize: 16}}>Categorias</Text>
+          </CategoryFilter>
+        )}
 
       </CategoriesFilter>
 
