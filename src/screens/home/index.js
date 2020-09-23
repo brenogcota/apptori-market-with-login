@@ -48,7 +48,7 @@ export default function Home({ navigation }) {
           console.log(error.response);
         });
 
-      API.getCategories('products', token)
+      API.getCategories('categories', token)
         .then((response) => {
           setCategories(response.data.data);
           console.debug('category__'+categories);
@@ -77,7 +77,7 @@ export default function Home({ navigation }) {
         { categories ? categories.map(category => {
           return (
             <CategoryFilter key={category.id} border="green">
-              <Text style={{ color: 'green', fontSize: 16}}>{category.category_name}</Text>
+              <Text style={{ color: 'green', fontSize: 16}}>{category.name}</Text>
             </CategoryFilter>
           ) 
         }) : (
