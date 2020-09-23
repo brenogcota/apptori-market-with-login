@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, Image } from 'react-native';
+import { Text, Image, ToastAndroid } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import * as CartActions from '../../store/modules/cart/actions';
@@ -36,8 +36,17 @@ export default function Product({ route, navigation }) {
         return sumAmount;
     }, {}));
 
+    const showToastWithGravity = () => {
+        ToastAndroid.showWithGravityAndOffset(
+          'Seu produto já foi adicionado no carrinho!',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+          25,
+          200
+        );
+    };
+
     const dispatch = useDispatch();
-    
 
     const increment = () => {
         quantity < 1 ? setQuantity(1) : setQuantity(quantity +1);
@@ -48,9 +57,15 @@ export default function Product({ route, navigation }) {
     }
 
     const handleAddProduct = (product, quantity) => {
-        dispatch(CartActions.addToCart(product, Number(quantity)));
-        navigation.navigate(' ');
+        if(amount[product.id] >= 1) {
+            return showToastWithGravity();
+        } else {
+            dispatch(CartActions.addToCart(product, Number(quantity)));
+            navigation.navigate(' ');
+        }
     };
+
+    
 
     return (
         <Wrapper>

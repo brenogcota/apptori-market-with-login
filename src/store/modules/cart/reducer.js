@@ -5,7 +5,6 @@ export default function cart(state = [], action) {
         case 'ADD_TO_CART': 
             return produce(state, draft => {
                 const productIndex = draft.findIndex(p => p.id === action.product.id);
-                console.debug('redux___'+action.quantity)
                 if(productIndex >= 0 ) {
                     draft[productIndex].amount += 1;
                 } else {

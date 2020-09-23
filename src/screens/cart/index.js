@@ -33,7 +33,7 @@ import {  Wrapper,
 export default function Cart({ navigation }) {
 
   const total = useSelector(state => state.cart.reduce((totalSum, product) => {
-    return Number(totalSum + product.price * product.amount).toFixed(2);
+    return totalSum + product.price * product.amount;
   }, 0));
 
   const cart = useSelector(state => state.cart.map(product => ({
@@ -102,7 +102,7 @@ export default function Cart({ navigation }) {
         
         <AmountBox>
           <Quantity>Quantidade de items: 1</Quantity>
-          <Amount>Total: R$ {total}</Amount>
+          <Amount>Total: R$ {total.toFixed(2)}</Amount>
         </AmountBox>
 
         <ContainerBottom>
