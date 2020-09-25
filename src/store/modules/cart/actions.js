@@ -20,3 +20,10 @@ export function updateAmount(id, amount) {
         amount
     };
 }
+
+export function addFromStorage(products) {
+    return {
+        type: 'ADD_FROM_STORAGE',
+        products
+    };
+}

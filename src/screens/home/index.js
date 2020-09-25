@@ -51,7 +51,6 @@ export default function Home({ navigation }) {
       API.getCategories('categories', token)
         .then((response) => {
           setCategories(response.data.data);
-          console.debug('category__'+categories);
         })
         .catch((error) => {
           console.log(error.response);
@@ -60,7 +59,6 @@ export default function Home({ navigation }) {
 
   }, [])
 
-  
 
   return (
     <Wrapper>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TouchableOpacity, Image } from 'react-native';
 
 import * as CartActions from '../../store/modules/cart/actions';
+import Storage from '../../services/storage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -32,6 +33,14 @@ import {  Wrapper,
 } from './styles';
 export default function Cart({ navigation }) {
 
+
+  useEffect(() => {
+    Storage.get('cart').then(products => {
+          dispatch(CartActions.addFromStorage(products));
+    });
+
+  }, [])
+
   const total = useSelector(state => state.cart.reduce((totalSum, product) => {
     return totalSum + product.price * product.amount;
   }, 0));
@@ -40,7 +49,6 @@ export default function Cart({ navigation }) {
     ...product,
     subtotal: Number(product.price * product.amount).toFixed(2),
   })));
-
 
   const dispatch = useDispatch();
 
@@ -68,7 +76,7 @@ export default function Cart({ navigation }) {
 
       <Container>
 
-        { cart.map( product => { 
+        { cart.map( product => {
             return(
               <Product key={product.id}>
                 <ProductImageBox>
@@ -101,7 +109,7 @@ export default function Cart({ navigation }) {
         })}
         
         <AmountBox>
-          <Quantity>Quantidade de items: 1</Quantity>
+          <Quantity>Quantidade de items: {cart.length}</Quantity>
           <Amount>Total: R$ {total.toFixed(2)}</Amount>
         </AmountBox>
 

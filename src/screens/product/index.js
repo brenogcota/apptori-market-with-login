@@ -32,13 +32,13 @@ export default function Product({ route, navigation }) {
     const { product } = route.params;
 
     const amount = useSelector(state => state.cart.reduce((sumAmount, product) => {
-       sumAmount[product.id] = product.amount;
+        sumAmount[product.id] = product.amount;
         return sumAmount;
     }, {}));
 
     const showToastWithGravity = () => {
         ToastAndroid.showWithGravityAndOffset(
-          'Seu produto já foi adicionado no carrinho!',
+          'Produto já adicionado ao carrinho!',
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM,
           25,
