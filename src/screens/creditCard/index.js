@@ -1,8 +1,16 @@
-import React from 'react';
-import { Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+        View,
+        Text,
+        Image,
+        Alert,
+        Modal,
+} from "react-native";
+
+import Storage from '../../services/storage';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-
 import IconEdit from '../../assets/icons/editar_icone_x3.png';
 import IconRemove from '../../assets/icons/excluir_icone_x3.png';
 
@@ -20,13 +28,103 @@ import {    Wrapper,
             CardName,
             CardFooter,
             EditIcon,
-            RemoveIcon
+            RemoveIcon,
+            ModalContainer,
+            ModalContent,
+            ModalInput,
+            ModalFooter,
+            ModalButton,
+            ModalTextButton,
 } from './styles';
+
+const colors = 
+    {
+        a: '#fd1d1d',
+        b: '#eeaa65',
+        c: '#1dfddc',
+        d: '#7965ee',
+        e: '#7b80c8',
+        f: '#ee65af'
+    }
 
 function CreditCard({ navigation }) {
 
-  return (
+    const [modalVisible, setModalVisible] = useState(false);
+    const [cardName, setCardName] = useState('');
+    const [cardNumber, setCardNumber] = useState('');
+    const [cards, setCard] = useState([]);
+
+    const handleCreditCard = () => {
+
+        const card = [...cards, {
+            name: cardName,
+            number: cardNumber
+        }];
+
+        setCard(card);
+        Storage.setKey('ccard', card);
+        
+        setCardName('');
+        setCardNumber('');
+        setModalVisible(false);
+    };
+
+    const removeCreditCard = number => {
+        const card = cards.filter(card => card.number !== number);
+        setCard(card)
+        Storage.setKey('ccard', card);
+
+    }
+
+    useEffect(() => {
+       
+        Storage.get('ccard').then( value => {
+            value !== null ? setCard(value) : null;
+        })
+
+    }, []);
+
+
+    return (
+
         <Wrapper>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    }}
+                >
+                    <ModalContainer behavior="height">
+                        <ModalContent>
+                            <ModalInput 
+                                placeholder="Número do cartão "
+                                value={cardNumber}
+                                onChangeText={ (text) => setCardNumber(text)}
+                                keyboardType={'numeric'}
+                            />
+                            <ModalInput 
+                                placeholder="Nome " 
+                                value={cardName}
+                                onChangeText={(text) => setCardName(text)}
+                            />
+
+                            <ModalFooter>
+                                <ModalButton btn='end' onPress={ () => {handleCreditCard()}}>
+                                    <ModalTextButton btn='end'>Finalizar</ModalTextButton>
+                                </ModalButton>
+
+                                <ModalButton onPress={() => {
+                                    setModalVisible(!modalVisible);
+                                }}>
+                                    <ModalTextButton>Cancelar</ModalTextButton>
+                                </ModalButton>
+                            </ModalFooter>
+
+                        </ModalContent>
+                    </ModalContainer>
+                </Modal>
             
                 <Header>
                     <Back>
@@ -37,41 +135,46 @@ function CreditCard({ navigation }) {
                         <Title>Cartões</Title>
                     </Back>
 
-                    <AddCreditCard onPress={() => {}}>
+                    <AddCreditCard onPress={() => {
+                        setModalVisible(true);
+                    }}>
                         <Icon name="plus" size={30} color="#666" />
                     </AddCreditCard>
-                    
                 </Header>
 
             <Container>
-                <CreditCardShape>
-                    <CardHeader>
-                        <CardRef>5952 5121 * * *</CardRef>
-                        <Icon name="cc-mastercard" size={30} color="#fff" />
-                    </CardHeader>
 
-                    <CardContent>
-                        <CardName>José Aguiar Silva</CardName>
-                    </CardContent>
+                { cards ? cards.map( card => {
+                    return (
+                        <CreditCardShape key={card.number}
+                            colors={[colors.c, colors.d]}
+                        >
+                            <CardHeader>
+                            <CardRef>{card.number} *** **</CardRef>
+                                <Icon name="cc-mastercard" size={30} color="#fff" />
+                            </CardHeader>
+                            <CardContent>
+                                <CardName>{card.name}</CardName>
+                            </CardContent>
+                            <CardFooter>
+                                <EditIcon >
+                                    <Image source={IconEdit} style={{padding: 10, width: 20, height: 20}}/>
+                                </EditIcon>
+                                <RemoveIcon onPress={() => { removeCreditCard(card.number)}}>
+                                    <Image source={IconRemove} style={{padding: 10, width: 20, height: 20}}/>
+                                </RemoveIcon>
+                            </CardFooter> 
+                        </CreditCardShape>     
 
-                    <CardFooter>
-                        <EditIcon >
-                            <Image source={IconEdit} style={{padding: 10, width: 20, height: 20}}/>
-                        </EditIcon>
+                    )}): (
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',}}>
+                            <Text>Você ainda não possui nenhum cartão cadastrado.</Text>
+                        </View>
+                    ) }
 
-                        <RemoveIcon >
-                            <Image source={IconRemove} style={{padding: 10, width: 20, height: 20}}/>
-                        </RemoveIcon>
-                        
-                        
-                    </CardFooter>
-                    
-                </CreditCardShape>
-
-                
             </Container>
         </Wrapper>
-  );
+   );
 }
 
 export default CreditCard;
