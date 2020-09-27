@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Text, Image, TouchableWithoutFeedback } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { Text, Image, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 
 import Storage from '../../services/storage';
 import API from '../../services/api';
+
+import { AuthContext } from '../../context/authContext';
 
 import Image1 from '../../assets/images/1.jpg';
 import Image2 from '../../assets/images/2.webp';
@@ -13,7 +15,7 @@ import {
         Wrapper, 
         SearchBox,
         SearchInput,
-        UserImage,
+        UserImageButton,
         CategoriesFilter,
         CategoryFilter,
         TextBig,
@@ -35,6 +37,8 @@ export default function Home({ navigation }) {
 
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
+
+  const { signOut } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
@@ -59,6 +63,11 @@ export default function Home({ navigation }) {
 
   }, [])
 
+  const logout = () => {
+    Storage.remove('token');
+    signOut();
+  }
+
 
   return (
     <Wrapper>
@@ -68,7 +77,10 @@ export default function Home({ navigation }) {
           placeholder="Pesquisar..." 
           onChangeText={() => ({})}
         />
-        <UserImage source={UserIcon} />
+
+        <UserImageButton onPress={() => {logout()}}>
+          <Image style={{ width: 32, height: 32}} source={UserIcon} />
+        </UserImageButton>
       </SearchBox>
       
       <CategoriesFilter>
@@ -147,13 +159,10 @@ export default function Home({ navigation }) {
             )
           
           }
-        
 
           </Products>
 
-
       </Container>
-
     </Wrapper>
   );
 }

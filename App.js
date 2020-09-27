@@ -106,6 +106,9 @@ const App = () => {
   const authContext = useMemo(() => ({
     signIn: async () => {
         setSigned(true);
+    },
+    signOut: async () => {
+      setSigned(false);
     }
   }));
   

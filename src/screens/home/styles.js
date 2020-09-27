@@ -29,7 +29,7 @@ export const SearchInput = styled.TextInput`
     padding-left: 20px;
 `;
 
-export const UserImage = styled.Image`
+export const UserImageButton = styled.TouchableOpacity`
     width: 32px;
     height: 32px;
     position: absolute;

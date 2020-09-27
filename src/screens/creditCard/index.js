@@ -67,7 +67,10 @@ function CreditCard({ navigation }) {
         setCardName('');
         setCardNumber('');
         setModalVisible(false);
+        
+         
     };
+
 
     const removeCreditCard = number => {
         const card = cards.filter(card => card.number !== number);
@@ -75,6 +78,13 @@ function CreditCard({ navigation }) {
         Storage.setKey('ccard', card);
 
     }
+
+   /* method incomplete 
+    *const editCreditCard = (cardName, cardNumber) => {
+    *   cardIndex = cards.findIndex((obj => obj.number === cardNumber));
+    *
+    *   cards[cardIndex].name = cardName;
+    }*/
 
     useEffect(() => {
        
@@ -148,6 +158,8 @@ function CreditCard({ navigation }) {
                     return (
                         <CreditCardShape key={card.number}
                             colors={[colors.c, colors.d]}
+                            start={{x: 0, y: 1.5}}
+                            end={{x: 0.9, y: 0}}
                         >
                             <CardHeader>
                             <CardRef>{card.number} *** **</CardRef>
@@ -157,7 +169,9 @@ function CreditCard({ navigation }) {
                                 <CardName>{card.name}</CardName>
                             </CardContent>
                             <CardFooter>
-                                <EditIcon >
+                                <EditIcon onPress={() => {
+                                    setModalVisible(!modalVisible);
+                                }}>
                                     <Image source={IconEdit} style={{padding: 10, width: 20, height: 20}}/>
                                 </EditIcon>
                                 <RemoveIcon onPress={() => { removeCreditCard(card.number)}}>

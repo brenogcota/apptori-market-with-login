@@ -45,7 +45,11 @@ export default function Cart({ navigation }) {
     return totalSum + product.price * product.amount;
   }, 0));
 
-  const cart = useSelector(state => state.cart.map(product => ({
+  const totalItems = useSelector(state => state.cart.reduce((totalSum, product) => {
+    return totalSum + 1 * product.amount;
+  }, 0));
+
+  const cart = useSelector(state => state.cart.map((product) => ({
     ...product,
     subtotal: Number(product.price * product.amount).toFixed(2),
   })));
@@ -81,7 +85,7 @@ export default function Cart({ navigation }) {
               <Product key={product.id}>
                 <ProductImageBox>
                     <ProductImage source={{uri: 'https://torimarket.com.br/'+product.image}} />
-                    <RemoveIcon onPress={() => dispatch(CartActions.removeFromCart(product.id))}>
+                    <RemoveIcon onPress={() => {dispatch(CartActions.removeFromCart(product.id))}}>
                         <MIcon name="close" size={30} color="#fff"/>
                     </RemoveIcon>
                 </ProductImageBox>
@@ -109,7 +113,7 @@ export default function Cart({ navigation }) {
         })}
         
         <AmountBox>
-          <Quantity>Quantidade de items: {cart.length}</Quantity>
+          <Quantity>Quantidade de items: {totalItems}</Quantity>
           <Amount>Total: R$ {total.toFixed(2)}</Amount>
         </AmountBox>
 
