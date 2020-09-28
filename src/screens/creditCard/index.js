@@ -50,8 +50,10 @@ const colors =
 function CreditCard({ navigation }) {
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [isUpdated, setIsUpdated] = useState(false);
     const [cardName, setCardName] = useState('');
     const [cardNumber, setCardNumber] = useState('');
+    const [index, setIndex] = useState('');
     const [cards, setCard] = useState([]);
 
     const handleCreditCard = () => {
@@ -66,8 +68,7 @@ function CreditCard({ navigation }) {
         
         setCardName('');
         setCardNumber('');
-        setModalVisible(false);
-        
+        setModalVisible(false);       
          
     };
 
@@ -79,12 +80,22 @@ function CreditCard({ navigation }) {
 
     }
 
-   /* method incomplete 
-    *const editCreditCard = (cardName, cardNumber) => {
-    *   cardIndex = cards.findIndex((obj => obj.number === cardNumber));
-    *
-    *   cards[cardIndex].name = cardName;
-    }*/
+    
+    const editCreditCard = () => {
+        const cardIndex = cards.findIndex((obj => obj.number === index));
+        cards[cardIndex].name = cardName;
+        cards[cardIndex].number = cardNumber;
+
+        setCard(cards);
+        Storage.remove('ccard');
+        Storage.setKey('ccard', cards);
+        
+        setCardName('');
+        setCardNumber('');
+        setModalVisible(false);
+        setIsUpdated(false);
+        setIndex('');
+    }
 
     useEffect(() => {
        
@@ -121,10 +132,17 @@ function CreditCard({ navigation }) {
                             />
 
                             <ModalFooter>
-                                <ModalButton btn='end' onPress={ () => {handleCreditCard()}}>
-                                    <ModalTextButton btn='end'>Finalizar</ModalTextButton>
-                                </ModalButton>
-
+                                { isUpdated ? (
+                                    <ModalButton btn='end' onPress={ () => {editCreditCard()}}>
+                                        <ModalTextButton btn='end'>Atualizar</ModalTextButton>
+                                    </ModalButton>
+                                    ) : (
+                                    <ModalButton btn='end' onPress={ () => {handleCreditCard()}}>
+                                        <ModalTextButton btn='end'>Adicionar</ModalTextButton>
+                                    </ModalButton>
+                                    )
+                                }
+                                
                                 <ModalButton onPress={() => {
                                     setModalVisible(!modalVisible);
                                 }}>
@@ -146,6 +164,7 @@ function CreditCard({ navigation }) {
                     </Back>
 
                     <AddCreditCard onPress={() => {
+                        setIsUpdated(false);
                         setModalVisible(true);
                     }}>
                         <Icon name="plus" size={30} color="#666" />
@@ -170,6 +189,8 @@ function CreditCard({ navigation }) {
                             </CardContent>
                             <CardFooter>
                                 <EditIcon onPress={() => {
+                                    setIndex(card.number);
+                                    setIsUpdated(true);
                                     setModalVisible(!modalVisible);
                                 }}>
                                     <Image source={IconEdit} style={{padding: 10, width: 20, height: 20}}/>

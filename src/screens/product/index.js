@@ -71,7 +71,7 @@ export default function Product({ route, navigation }) {
         <Wrapper>
             <ProductHeader>
                 <ProductImage
-                    source={{uri: 'http://torimarket.com.br/'+product.image}}
+                    source={{uri: 'https://torimarket.com.br/'+product.image}}
                 />
                 <BackgroundArrow onPress={() => { navigation.goBack() }}>
                     <MIcon name="chevron-left" size={40} />

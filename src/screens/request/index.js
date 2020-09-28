@@ -58,7 +58,7 @@ function Request({ navigation }) {
                 });
               }}>
               <Product>
-                <ProductImage source={{uri:'http://torimarket.com.br'+order.image}} />
+                <ProductImage source={{uri:'https://torimarket.com.br/'+order.image}} />
                 <ProductDetails>
                   <ProductName>{order.name}</ProductName>
                   <ProductId>#{order.id_orderitems}</ProductId>

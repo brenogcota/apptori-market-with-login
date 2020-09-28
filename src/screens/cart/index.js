@@ -107,7 +107,7 @@ export default function Cart({ navigation }) {
             return(
               <Product key={product.id}>
                 <ProductImageBox>
-                    <ProductImage source={{uri: 'http://torimarket.com.br/'+product.image}} />
+                    <ProductImage source={{uri: 'https://torimarket.com.br/'+product.image}} />
                     <RemoveIcon onPress={() => {dispatch(CartActions.removeFromCart(product.id))}}>
                         <MIcon name="close" size={30} color="#fff"/>
                     </RemoveIcon>

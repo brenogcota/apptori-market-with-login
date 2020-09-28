@@ -139,7 +139,7 @@ export default function Home({ navigation }) {
                   }}>
                     <Product>
                       <ProductImage
-                        source={{uri:'http://torimarket.com.br/'+product.image}}
+                        source={{uri:'https://torimarket.com.br/'+product.image}}
                       />
                       <ProductPrice>
                         <LightSmallText numberOfLines={1}>R$ {product.price}</LightSmallText>

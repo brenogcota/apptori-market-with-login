@@ -24,7 +24,7 @@ function Sale({ route, navigation }) {
         <Wrapper>
             <ProductHeader>
                 <ProductImage
-                    source={{uri:'http://torimarket.com.br/'+order.image}}
+                    source={{uri:'https://torimarket.com.br/'+order.image}}
                 />
                 <BackgroundArrow onPress={() => { navigation.goBack() }}>
                     <MIcon name="chevron-left" size={40} />
