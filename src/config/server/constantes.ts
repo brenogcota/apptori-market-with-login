@@ -1,1 +1,1 @@
-export const url = 'https://torimarket.com.br/api/';
+export const url = 'http://torimarket.com.br/api/';

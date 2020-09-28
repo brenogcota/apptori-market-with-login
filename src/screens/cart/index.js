@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TouchableOpacity, Image } from 'react-native';
 
 import * as CartActions from '../../store/modules/cart/actions';
+import API from '../../services/api';
 import Storage from '../../services/storage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -68,6 +69,28 @@ export default function Cart({ navigation }) {
     navigation.navigate(route);
   }
 
+  const makeOrder = async (total, cart) => {
+      const products = cart.map(product => ({
+        product_id: product.id,
+        unitary_value: product.price,
+        quantity: product.amount
+      }))
+
+      const data = {
+        total_value: total.toFixed(2),
+        products: products
+      }
+
+      const token = await Storage.get('token');
+      API.makeOrder(data, 'orders/create', token).then(response => {
+        navigation.navigate('SuccessRequest', {
+          data: response
+        })
+      }).catch(err => {
+        console.log(err.response);
+      });
+  }
+
   return (
     <Wrapper>
       <Header>
@@ -84,7 +107,7 @@ export default function Cart({ navigation }) {
             return(
               <Product key={product.id}>
                 <ProductImageBox>
-                    <ProductImage source={{uri: 'https://torimarket.com.br/'+product.image}} />
+                    <ProductImage source={{uri: 'http://torimarket.com.br/'+product.image}} />
                     <RemoveIcon onPress={() => {dispatch(CartActions.removeFromCart(product.id))}}>
                         <MIcon name="close" size={30} color="#fff"/>
                     </RemoveIcon>
@@ -122,7 +145,7 @@ export default function Cart({ navigation }) {
                 <Image source={IconCard} style={{width: 30, height: 30}} />
             </AddToCart>
 
-            <Buy onPress={() => {goTo('SuccessRequest')}} >
+            <Buy onPress={() => {makeOrder(total, cart)}} >
                 <BuyText>Comprar agora</BuyText>
             </Buy>
         </ContainerBottom>

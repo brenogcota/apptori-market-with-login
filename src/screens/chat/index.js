@@ -18,7 +18,9 @@ import { Wrapper,
          SendButton
 } from './styles';
 
-function Chat({ navigation }) {
+function Chat({ route, navigation }) {
+    const { order } = route.params;
+
 
     const scrollViewRef = useRef();
 
@@ -30,8 +32,8 @@ function Chat({ navigation }) {
                 </BackgroundArrow>
 
                 <Info>
-                    <ProductName>Nome do produto</ProductName>
-                    <ProductId>#001</ProductId>
+                    <ProductName>{order.name}</ProductName>
+                    <ProductId>#{order.id_orderitems}</ProductId>
                 </Info>
 
             </ProductHeader>

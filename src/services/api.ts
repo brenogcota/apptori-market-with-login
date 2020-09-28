@@ -27,4 +27,10 @@ export default class API {
   static getCategories(path: string, token: string) {
     return axios.get(url + path, {headers: {Authorization: token}});
   }
+  static makeOrder(data: any, path: string, token: string) {
+    return axios.post(url + path, data, {headers: {Authorization: token}});
+  }
+  static getOrders(path: string, token: string) {
+    return axios.get(url + path, {headers: {Authorization: token}});
+  }
 }

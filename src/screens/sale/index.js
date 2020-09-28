@@ -16,17 +16,15 @@ import { Wrapper,
         Faq,
 } from './styles';
 
-function Sale({ navigation }) {
+function Sale({ route, navigation }) {
+    const { order } = route.params;
 
-    const goTo = (route) => {
-        navigation.navigate(route);
-    }
-
+ 
     return (
         <Wrapper>
             <ProductHeader>
                 <ProductImage
-                    source={Image3}
+                    source={{uri:'http://torimarket.com.br/'+order.image}}
                 />
                 <BackgroundArrow onPress={() => { navigation.goBack() }}>
                     <MIcon name="chevron-left" size={40} />
@@ -36,19 +34,16 @@ function Sale({ navigation }) {
 
             
                 <Container>
-                    <ProductTitle>Nome produto</ProductTitle>
-
-
-                    <Description>
-                        The next generation of our icon library + toolkit is coming with more icons, more styles, more services, and more awesome. Pre-order now to get early access and releases over the next year!
-                    </Description>
-
+                    <ProductTitle>{order.name}</ProductTitle>
+                    <Description>{order.description}</Description>
                     <Units>
                         <Text>Unidades disponiveis</Text>
-                        <Text>2</Text>
+                        <Text>{order.stock}</Text>
                     </Units>
 
-                    <Faq onPress={() => goTo('Chat')}>
+                    <Faq onPress={() => navigation.navigate('Chat', {
+                        order: order
+                    })}>
                             <Image source={FaqIcon} style={{width: 30, height: 30}}/>
                     </Faq>
                 </Container>

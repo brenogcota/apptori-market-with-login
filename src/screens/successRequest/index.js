@@ -1,5 +1,4 @@
 import React from 'react';
-import { Text } from 'react-native';
 
 import {    Wrapper, 
             Container, 
@@ -11,7 +10,8 @@ import {    Wrapper,
             TextButton 
 } from './styles';
 
-function SuccessRequest({ navigation }) {
+function SuccessRequest({ route, navigation }) {
+  const { data } = route.params;
 
   return (
       <Wrapper>
@@ -22,7 +22,7 @@ function SuccessRequest({ navigation }) {
 
               <Details>
                   <TextNumber>Número do seu pedido</TextNumber>
-                  <Number>#001</Number>
+                  <Number>#{data.code}</Number>
               </Details>
 
               <Button onPress={() => { navigation.navigate('Pedidos'); }}>
