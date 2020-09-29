@@ -34,7 +34,7 @@ function Request({ navigation }) {
 
   }, []);
 
-  const data = orders && orders.map(order => ({
+  const data = orders.map(order => ({
     ...order,
     date: formatDate(order.created_at)
   }));

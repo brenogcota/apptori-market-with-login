@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Text, Image, ToastAndroid } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, Image, ToastAndroid, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as CartActions from '../../store/modules/cart/actions';
+
+import API from '../../services/api';
+import Storage from '../../services/storage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -29,6 +31,7 @@ import { Wrapper,
 export default function Product({ route, navigation }) {
 
     const [quantity, setQuantity] = useState(1);
+    const [loading, setLoading] = useState(false);
     const { product } = route.params;
 
     const amount = useSelector(state => state.cart.reduce((sumAmount, product) => {
@@ -64,6 +67,30 @@ export default function Product({ route, navigation }) {
             navigation.navigate(' ');
         }
     };
+
+    const makeOrder = async ( product ) => {
+        setLoading(true);
+        const products = [{
+          product_id: product.id,
+          unitary_value: product.price,
+          quantity: quantity
+        }];
+  
+        const data = {
+          total_value: Number(product.price) * quantity,
+          products: products
+        }
+  
+        const token = await Storage.get('token');
+        API.makeOrder(data, 'orders/create', token).then(response => {
+          navigation.navigate('SuccessRequest', {
+            data: response.data
+          })
+          setLoading(false);
+        }).catch(err => {
+          console.log(err.response);
+        });
+    }
 
     
 
@@ -107,6 +134,12 @@ export default function Product({ route, navigation }) {
                         <Text>{product.stock}</Text>
                     </Units>
 
+                    { loading && (
+                        <View style={{flex: 1, justifyContent: "center", alignItems: "center", margin: 20}}>
+                            <ActivityIndicator size="large" />
+                        </View>
+                      ) 
+                    }
                     <ContainerBottom>
                         <AddToCart onPress={() => { handleAddProduct(product, quantity)}}>
                             <Image source={ShopIcon} style={{ width: 50, height: 50}} />
@@ -115,7 +148,7 @@ export default function Product({ route, navigation }) {
                             </IconAddCart>
                         </AddToCart>
 
-                        <Buy onPress={() => {}} >
+                        <Buy onPress={() => {makeOrder(product)}} >
                             <BuyText>Comprar agora</BuyText>
                         </Buy>
                     </ContainerBottom>
