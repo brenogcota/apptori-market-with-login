@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, ToastAndroid, ActivityIndicator } from 'react-native';
 
 import * as CartActions from '../../store/modules/cart/actions';
 import API from '../../services/api';
@@ -34,6 +34,7 @@ import {  Wrapper,
 } from './styles';
 export default function Cart({ navigation }) {
 
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     Storage.get('cart').then(products => {
@@ -70,6 +71,7 @@ export default function Cart({ navigation }) {
   }
 
   const makeOrder = async (total, cart) => {
+      setLoading(true);
       const products = cart.map(product => ({
         product_id: product.id,
         unitary_value: product.price,
@@ -84,12 +86,24 @@ export default function Cart({ navigation }) {
       const token = await Storage.get('token');
       API.makeOrder(data, 'orders/create', token).then(response => {
         navigation.navigate('SuccessRequest', {
-          data: response
+          data: response.data
         })
+        setLoading(false);
+        Storage.remove('cart');
       }).catch(err => {
         console.log(err.response);
       });
   }
+
+  const showToastWithGravity = () => {
+      ToastAndroid.showWithGravityAndOffset(
+        'Seu carrinho está vazio!',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+        25,
+        200
+      );
+  };
 
   return (
     <Wrapper>
@@ -140,14 +154,30 @@ export default function Cart({ navigation }) {
           <Amount>Total: R$ {total.toFixed(2)}</Amount>
         </AmountBox>
 
+        { loading && (
+            <View style={{flex: 1, justifyContent: "center", alignItems: "center", margin: 20}}>
+                <ActivityIndicator size="large" />
+            </View>
+          ) 
+        }
+
         <ContainerBottom>
             <AddToCart onPress={() => {goTo('CreditCard')}}>
                 <Image source={IconCard} style={{width: 30, height: 30}} />
             </AddToCart>
 
-            <Buy onPress={() => {makeOrder(total, cart)}} >
+          { Number(totalItems) < 1 ? (
+              <Buy style={{backgroundColor: 'rgba(226, 28, 28, 0.5)'}}
+                   onPress={() => {showToastWithGravity()}}
+              >
                 <BuyText>Comprar agora</BuyText>
-            </Buy>
+              </Buy>
+            ) : (
+              <Buy onPress={() => {makeOrder(total, cart)}} >
+                <BuyText>Comprar agora</BuyText>
+              </Buy>
+            )
+          }
         </ContainerBottom>
 
       </Container>

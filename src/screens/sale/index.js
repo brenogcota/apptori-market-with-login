@@ -1,8 +1,7 @@
 import React from 'react';
-import { Text, Image } from 'react-native';
+import { Text, Image, View } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
-import Image3 from '../../assets/images/3.webp';
 import FaqIcon from '../../assets/icons/chat_icone_x3.png';
 
 import { Wrapper, 
@@ -35,6 +34,10 @@ function Sale({ route, navigation }) {
             
                 <Container>
                     <ProductTitle>{order.name}</ProductTitle>
+                    <View style={{flexDirection: 'row', marginTop: 20}}>
+                        <Text style={{fontSize: 18}}>#{order.id_orderitems}</Text>
+                        <Text style={{fontSize: 18, marginLeft: 20}}>{order.date}</Text>
+                    </View>
                     <Description>{order.description}</Description>
                     <Units>
                         <Text>Unidades disponiveis</Text>
