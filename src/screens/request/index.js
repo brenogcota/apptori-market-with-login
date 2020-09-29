@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  View, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
+import {  View, TouchableWithoutFeedback, ActivityIndicator, Text } from 'react-native';
 
 import API from '../../services/api';
 import Storage from '../../services/storage';
@@ -38,6 +38,7 @@ function Request({ navigation }) {
     ...order,
     date: formatDate(order.created_at)
   }));
+
 
   function formatDate(date) {
     const [newDate, ] = date.split(' ');

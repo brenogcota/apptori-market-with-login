@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Text, Image, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 
+import Secure from '../../services/secure-storage';
 import Storage from '../../services/storage';
 import API from '../../services/api';
 
@@ -91,9 +92,11 @@ export default function Home({ navigation }) {
             </CategoryFilter>
           ) 
         }) : (
-          <CategoryFilter border="gray">
-            <Text style={{ color: 'gray', fontSize: 16}}>Categorias</Text>
-          </CategoryFilter>
+          <>
+            <CategoryFilter border="gray" style={{ backgroundColor: 'ddd', width: 120}}></CategoryFilter>
+            <CategoryFilter border="gray" style={{ backgroundColor: 'ddd', width: 120}}></CategoryFilter>
+            <CategoryFilter border="gray" style={{ backgroundColor: 'ddd', width: 120}}></CategoryFilter>
+          </>
         )}
 
       </CategoriesFilter>

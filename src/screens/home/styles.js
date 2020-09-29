@@ -27,6 +27,7 @@ export const SearchInput = styled.TextInput`
     font-size: 18px;
     padding-right: 46px;
     padding-left: 20px;
+    width: 88%;
 `;
 
 export const UserImageButton = styled.TouchableOpacity`

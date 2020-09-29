@@ -38,7 +38,7 @@ export default function Cart({ navigation }) {
 
   useEffect(() => {
     Storage.get('cart').then(products => {
-          dispatch(CartActions.addFromStorage(products));
+          products && dispatch(CartActions.addFromStorage(products));
     });
 
   }, [])

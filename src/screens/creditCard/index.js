@@ -7,7 +7,7 @@ import {
         Modal,
 } from "react-native";
 
-import Storage from '../../services/storage';
+import Secure from '../../services/secure-storage';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -64,7 +64,7 @@ function CreditCard({ navigation }) {
         }];
 
         setCard(card);
-        Storage.setKey('ccard', card);
+        Secure.setKey('ccard', card);
         
         setCardName('');
         setCardNumber('');
@@ -76,7 +76,7 @@ function CreditCard({ navigation }) {
     const removeCreditCard = number => {
         const card = cards.filter(card => card.number !== number);
         setCard(card)
-        Storage.setKey('ccard', card);
+        Secure.setKey('ccard', card);
 
     }
 
@@ -87,8 +87,8 @@ function CreditCard({ navigation }) {
         cards[cardIndex].number = cardNumber;
 
         setCard(cards);
-        Storage.remove('ccard');
-        Storage.setKey('ccard', cards);
+        Secure.remove('ccard');
+        Secure.setKey('ccard', cards);
         
         setCardName('');
         setCardNumber('');
@@ -99,7 +99,7 @@ function CreditCard({ navigation }) {
 
     useEffect(() => {
        
-        Storage.get('ccard').then( value => {
+        Secure.get('ccard').then( value => {
             value !== null ? setCard(value) : null;
         })
 
@@ -119,11 +119,13 @@ function CreditCard({ navigation }) {
                 >
                     <ModalContainer behavior="height">
                         <ModalContent>
+
                             <ModalInput 
                                 placeholder="Número do cartão "
                                 value={cardNumber}
                                 onChangeText={ (text) => setCardNumber(text)}
                                 keyboardType={'numeric'}
+                                maxLength={12}
                             />
                             <ModalInput 
                                 placeholder="Nome " 
@@ -181,7 +183,7 @@ function CreditCard({ navigation }) {
                             end={{x: 0.9, y: 0}}
                         >
                             <CardHeader>
-                            <CardRef>{card.number} *** **</CardRef>
+                            <CardRef>{card.number.substring(0, 4) +' '+ card.number.substring(4, 8)} ****</CardRef>
                                 <Icon name="cc-mastercard" size={30} color="#fff" />
                             </CardHeader>
                             <CardContent>
