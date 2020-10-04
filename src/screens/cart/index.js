@@ -72,7 +72,7 @@ export default function Cart({ navigation }) {
 
   const makeOrder = async (total, cart) => {
       setLoading(true);
-      const products = cart.map(product => ({
+     const products = cart.map(product => ({
         product_id: product.id,
         unitary_value: product.price,
         quantity: product.amount
@@ -154,13 +154,6 @@ export default function Cart({ navigation }) {
           <Amount>Total: R$ {total.toFixed(2)}</Amount>
         </AmountBox>
 
-        { loading && (
-            <View style={{flex: 1, justifyContent: "center", alignItems: "center", margin: 20}}>
-                <ActivityIndicator size="large" />
-            </View>
-          ) 
-        }
-
         <ContainerBottom>
             <AddToCart onPress={() => {goTo('CreditCard')}}>
                 <Image source={IconCard} style={{width: 30, height: 30}} />
@@ -173,8 +166,11 @@ export default function Cart({ navigation }) {
                 <BuyText>Comprar agora</BuyText>
               </Buy>
             ) : (
-              <Buy onPress={() => {makeOrder(total, cart)}} >
-                <BuyText>Comprar agora</BuyText>
+              <Buy onPress={() => { loading === false && makeOrder(total, cart)}} >
+                { loading ? (
+                      <ActivityIndicator size={28} color="#fff" />
+                  ) : <BuyText>Comprar agora</BuyText>
+                }
               </Buy>
             )
           }

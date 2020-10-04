@@ -106,6 +106,7 @@ export const IconAddCart = styled.View`
 `;
 
 export const Buy = styled.TouchableOpacity`
+    min-width: 190px;
     background: rgb(226, 28, 28);
     border-radius: 16px;
     padding: 20px 25px;

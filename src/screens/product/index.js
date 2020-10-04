@@ -27,6 +27,7 @@ import { Wrapper,
         Buy,
         BuyText
 } from './styles';
+import { set } from 'react-native-reanimated';
 
 export default function Product({ route, navigation }) {
 
@@ -41,7 +42,7 @@ export default function Product({ route, navigation }) {
 
     const showToastWithGravity = () => {
         ToastAndroid.showWithGravityAndOffset(
-          'Produto já adicionado ao carrinho!',
+          'Produto já adicionado!',
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM,
           25,
@@ -69,6 +70,7 @@ export default function Product({ route, navigation }) {
     };
 
     const makeOrder = async ( product ) => {
+
         setLoading(true);
         const products = [{
           product_id: product.id,
@@ -134,12 +136,6 @@ export default function Product({ route, navigation }) {
                         <Text>{product.stock}</Text>
                     </Units>
 
-                    { loading && (
-                        <View style={{flex: 1, justifyContent: "center", alignItems: "center", margin: 20}}>
-                            <ActivityIndicator size="large" />
-                        </View>
-                      ) 
-                    }
                     <ContainerBottom>
                         <AddToCart onPress={() => { handleAddProduct(product, quantity)}}>
                             <Image source={ShopIcon} style={{ width: 50, height: 50}} />
@@ -148,8 +144,12 @@ export default function Product({ route, navigation }) {
                             </IconAddCart>
                         </AddToCart>
 
-                        <Buy onPress={() => {makeOrder(product)}} >
-                            <BuyText>Comprar agora</BuyText>
+                        <Buy onPress={() => { loading === false && makeOrder(product)}} >
+                            { loading ? (
+                                <ActivityIndicator size={28} color="#fff" />
+                            ) : <BuyText>Comprar agora</BuyText>
+                            }
+                            
                         </Buy>
                     </ContainerBottom>
                 </Container>
